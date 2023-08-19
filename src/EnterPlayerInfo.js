@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const EnterPlayerInfo = ({ addPlayer }) => {
+const EnterPlayerInfo = ({ addEntry }) => {
     const [id, setId] = useState('');
     const [name, setName] = useState('');
     const [points, setPoints] = useState('');
@@ -16,8 +16,8 @@ const EnterPlayerInfo = ({ addPlayer }) => {
             return;
         }
 
-        const player = { id, name, points: parsedPoints };
-        addPlayer(player);
+        const entry = { id, name, points: parsedPoints };
+        addEntry(entry);
 
         setId('');
         setName('');
