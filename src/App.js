@@ -43,8 +43,11 @@ const App = () => {
   };
 
   const editEntry = (entry) => {
-    localStorage.setItem('entries', JSON.stringify([...entries, entry]));
-    setEntries([...entries, entry]);
+    const updatedEntries = entries.map((e) =>
+      e.id === entry.id ? entry : e
+    );
+    localStorage.setItem('entries', JSON.stringify(updatedEntries));
+    setEntries(updatedEntries);
   };
 
   return (
