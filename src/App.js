@@ -1,25 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import EnterPlayerInfo from './EnterPlayerInfo';
+import Leaderboard from './Leaderboard';
 
-function App() {
+const App = () => {
+  const [players, setPlayers] = useState([]);
+
+  const addPlayer = (player) => {
+    const existingPlayer = players.find((p) => p.id === player.id);
+
+    if (existingPlayer) {
+      const updatedPlayers = players.map((p) =>
+        p.id === player.id ? { ...p, points: parseInt(p.points) + parseInt(player.points) } : p
+      );
+      setPlayers(updatedPlayers);
+    } else {
+      setPlayers([...players, player]);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Enter Player Info</Link>
+            </li>
+            <li>
+              <Link to="/leaderboard">Leaderboard</Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
+
+
+
+      <Routes>
+        <Route path='/leaderboard' element={<Leaderboard players={players} />} />
+        <Route path='/' element={<EnterPlayerInfo addPlayer={addPlayer} />} />
+      </Routes>
+
+    </Router >
+
   );
-}
+};
 
 export default App;
