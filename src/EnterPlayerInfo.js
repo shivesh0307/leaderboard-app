@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const EnterPlayerInfo = ({ addEntry }) => {
-    const [id, setId] = useState('');
+    const [playerId, setPlayerId] = useState('');
     const [name, setName] = useState('');
     const [points, setPoints] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -11,15 +11,15 @@ const EnterPlayerInfo = ({ addEntry }) => {
 
         const parsedPoints = parseInt(points);
 
-        if (!id || !name || isNaN(parsedPoints)) {
+        if (!playerId || !name || isNaN(parsedPoints)) {
             setErrorMessage('Please fill in all fields with valid data.');
             return;
         }
 
-        const entry = { id, name, points: parsedPoints };
+        const entry = { playerId, name, points: parsedPoints };
         addEntry(entry);
 
-        setId('');
+        setPlayerId('');
         setName('');
         setPoints('');
         setErrorMessage('');
@@ -31,8 +31,8 @@ const EnterPlayerInfo = ({ addEntry }) => {
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <form onSubmit={handleSubmit}>
                 <label>
-                    ID:
-                    <input type="text" value={id} onChange={(e) => setId(e.target.value)} />
+                    Player ID:
+                    <input type="text" value={playerId} onChange={(e) => setPlayerId(e.target.value)} />
                 </label>
                 <br />
                 <label>

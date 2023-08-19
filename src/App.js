@@ -2,50 +2,49 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import EnterPlayerInfo from './EnterPlayerInfo';
 import Leaderboard from './Leaderboard';
+import Entry from './Entry';
+import { nanoid } from 'nanoid'
 
 const App = () => {
   const [players, setPlayers] = useState([]);
   const [entries, setEntries] = useState([]);
+  //console.log("hi");
 
   useEffect(() => {
+    //console.log("hi");
     const storedEntries = JSON.parse(localStorage.getItem('entries')) || [];
     setEntries(storedEntries);
-    const storedPlayers = JSON.parse(localStorage.getItem('players')) || [];
-    setPlayers(storedPlayers);
+  }, []);
 
-    // Calculate total points for each player
-    /*const playersMap = storedEntries.reduce((map, entry) => {
-      if (map[entry.id]) {
-        map[entry.id].totalPoints += entry.points;
+  useEffect(() => {
+    //Calculate total points for each player
+    //console.log("hi");
+    const playersMap = entries.reduce((map, entry) => {
+      if (map[entry.playerId]) {
+        map[entry.playerId].points += entry.points;
+        map[entry.playerId].name = entry.name;
       } else {
-        map[entry.id] = { id: entry.id, totalPoints: entry.points };
+        map[entry.playerId] = { playerId: entry.playerId, name: entry.name, points: entry.points };
       }
       return map;
     }, {});
-
-    setPlayers(Object.values(playersMap));*/
-  }, []);
+    setPlayers(Object.values(playersMap));
+  }, [entries]);
 
   const addEntry = (entry) => {
-    setEntries([...entries, entry]);
+    entry = { ...entry, id: nanoid() };
     localStorage.setItem('entries', JSON.stringify([...entries, entry]));
-    addPlayer(entry);
+    setEntries([...entries, entry]);
+  };
+  const deleteEntry = (entryToDelete) => {
+    const updatedEntries = entries.filter((entry) => entry.id !== entryToDelete.id);
+    localStorage.setItem('entries', JSON.stringify(updatedEntries));
+    setEntries(updatedEntries);
   };
 
-  const addPlayer = (player) => {
-    const existingPlayer = players.find((p) => p.id === player.id);
-
-    if (existingPlayer) {
-      const updatedPlayers = players.map((p) =>
-        p.id === player.id ? { ...p, points: parseInt(p.points) + parseInt(player.points) } : p
-      );
-      setPlayers(updatedPlayers);
-      localStorage.setItem('players', JSON.stringify(updatedPlayers));
-    } else {
-      const updatedPlayers = [...players, player];
-      setPlayers(updatedPlayers);
-      localStorage.setItem('players', JSON.stringify(updatedPlayers));
-    }
+  const editEntry = (entry) => {
+    localStorage.setItem('entries', JSON.stringify([...entries, entry]));
+    setEntries([...entries, entry]);
   };
 
   return (
@@ -54,7 +53,7 @@ const App = () => {
         <nav>
           <ul>
             <li>
-              <Link to="/">Enter Player Info</Link>
+              <Link to="/">Enter Player Points</Link>
             </li>
             <li>
               <Link to="/leaderboard">Leaderboard</Link>
@@ -64,13 +63,24 @@ const App = () => {
       </div>
 
 
-
       <Routes>
         <Route path='/leaderboard' element={<Leaderboard players={players} />} />
         <Route path='/' element={<EnterPlayerInfo addEntry={addEntry} />} />
       </Routes>
+      <div>
+        <h2>All Entries</h2>
+        {entries.map((entry) => (
+          <Entry
+            key={entry.id}
+            entry={entry}
+            editEntry={editEntry}
+            deleteEntry={deleteEntry}
+          />
+        ))}
+      </div>
 
     </Router >
+
 
   );
 };
