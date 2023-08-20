@@ -3,7 +3,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import EnterPlayerInfo from './EnterPlayerInfo';
 import Leaderboard from './Leaderboard';
 import Entry from './Entry';
+import Entries from './Entries';
 import { nanoid } from 'nanoid'
+import FileUpload from './FileUpload';
 
 const App = () => {
   const [players, setPlayers] = useState([]);
@@ -61,6 +63,12 @@ const App = () => {
             <li>
               <Link to="/leaderboard">Leaderboard</Link>
             </li>
+            <li>
+              <Link to="/entries">All Entries</Link>
+            </li>
+            <li>
+              <Link to="/file-upload">File Upload</Link>
+            </li>
           </ul>
         </nav>
       </div>
@@ -69,18 +77,11 @@ const App = () => {
       <Routes>
         <Route path='/leaderboard' element={<Leaderboard players={players} />} />
         <Route path='/' element={<EnterPlayerInfo addEntry={addEntry} />} />
+        <Route path='/entries' element={<Entries entries={entries} editEntry={editEntry} deleteEntry={deleteEntry} />} />
+        <Route path='/file-upload' element={<FileUpload addEntry={addEntry} />} />
+
       </Routes>
-      <div>
-        <h2>All Entries</h2>
-        {entries.map((entry) => (
-          <Entry
-            key={entry.id}
-            entry={entry}
-            editEntry={editEntry}
-            deleteEntry={deleteEntry}
-          />
-        ))}
-      </div>
+      <Entries entries={entries} editEntry={editEntry} deleteEntry={deleteEntry} />
 
     </Router >
 
