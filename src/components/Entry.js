@@ -23,23 +23,21 @@ const Entry = ({ entry, editEntry, deleteEntry }) => {
         <div>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <form>
-                <label>
+                <div className="form-group">
                     Player ID:
-                    <input type="text" value={newEntry.playerId} onChange={(e) => setNewEntry({ ...newEntry, playerId: e.target.value })} />
-                </label>
-                <br />
-                <label>
+                    <input className="form-control" type="text" value={newEntry.playerId} onChange={(e) => setNewEntry({ ...newEntry, playerId: e.target.value })} />
+                </div>
+                <div className="form-group">
                     Name:
-                    <input type="text" value={newEntry.name} onChange={(e) => setNewEntry({ ...newEntry, name: e.target.value })} />
-                </label>
-                <br />
-                <label>
+                    <input className="form-control" type="text" value={newEntry.name} onChange={(e) => setNewEntry({ ...newEntry, name: e.target.value })} />
+                </div>
+                <div className="form-group">
                     Points:
-                    <input type="number" value={newEntry.points} onChange={(e) => setNewEntry({ ...newEntry, points: e.target.value })} />
-                </label>
+                    <input className="form-control" type="number" value={newEntry.points} onChange={(e) => setNewEntry({ ...newEntry, points: e.target.value })} />
+                </div>
                 <br />
-                <button onClick={handleSubmit}>Edit</button>
-                <button onClick={() => deleteEntry(entry)}>Delete</button>
+                <button type="button" className="btn btn-warning" onClick={handleSubmit}>Edit</button>
+                <button type="button" className="btn btn-danger" onClick={() => deleteEntry(entry)}>Delete</button>
             </form>
         </div>
     );

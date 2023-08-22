@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import EnterPlayerInfo from './EnterPlayerInfo';
-import Leaderboard from './Leaderboard';
-import Entry from './Entry';
-import Entries from './Entries';
+import EnterPlayerInfo from './components/EnterPlayerInfo';
+import Leaderboard from './components/Leaderboard';
+import Entry from './components/Entry';
+import Entries from './components/Entries';
 import { nanoid } from 'nanoid'
-import FileUpload from './FileUpload';
+import FileUpload from './components/FileUpload';
+import './components/styles.css'
+import './App.css'
+import {
+  CDBSidebar,
+  CDBSidebarContent,
+  CDBSidebarFooter,
+  CDBSidebarHeader,
+  CDBSidebarMenu,
+  CDBSidebarMenuItem,
+} from 'cdbreact';
+import { NavLink } from 'react-router-dom';
+
 
 const App = () => {
   const [players, setPlayers] = useState([]);
@@ -54,35 +66,67 @@ const App = () => {
 
   return (
     <Router>
-      <div>
+      <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
+        <CDBSidebar textColor="#fff" backgroundColor="#333">
+          <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
+            <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
+              Sidebar
+            </a>
+          </CDBSidebarHeader>
+
+          <CDBSidebarContent className="sidebar-content">
+            <CDBSidebarMenu>
+              <NavLink exact to="/" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="columns">Enter Player Points</CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink exact to="/leaderboard" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="table">Leaderboard</CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink exact to="/entries" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="user">All Entries</CDBSidebarMenuItem>
+              </NavLink>
+              <NavLink exact to="/file-upload" activeClassName="activeClicked">
+                <CDBSidebarMenuItem icon="upload">File Upload</CDBSidebarMenuItem>
+              </NavLink>
+
+            </CDBSidebarMenu>
+
+          </CDBSidebarContent>
+
+        </CDBSidebar>
+
+        {/*<div>
         <nav>
           <ul>
             <li>
-              <Link to="/">Enter Player Points</Link>
+              <Link to="/"></Link>
             </li>
             <li>
               <Link to="/leaderboard">Leaderboard</Link>
             </li>
             <li>
-              <Link to="/entries">All Entries</Link>
+              <Link to="/entries"></Link>
             </li>
             <li>
-              <Link to="/file-upload">File Upload</Link>
+              <Link to="/file-upload">/Link>
             </li>
           </ul>
         </nav>
+            </div>
+        */ }
+        <div className="App" id='main'>
+          <Routes>
+            <Route path='/leaderboard' element={<Leaderboard players={players} />} />
+            <Route path='/' element={<EnterPlayerInfo addEntry={addEntry} />} />
+            <Route path='/entries' element={<Entries entries={entries} editEntry={editEntry} deleteEntry={deleteEntry} />} />
+            <Route path='/file-upload' element={<FileUpload addEntry={addEntry} />} />
+
+          </Routes>
+          {/*<div>
+          <Entries entries={entries} editEntry={editEntry} deleteEntry={deleteEntry} />
+      </div>*/}
+        </div>
       </div>
-
-
-      <Routes>
-        <Route path='/leaderboard' element={<Leaderboard players={players} />} />
-        <Route path='/' element={<EnterPlayerInfo addEntry={addEntry} />} />
-        <Route path='/entries' element={<Entries entries={entries} editEntry={editEntry} deleteEntry={deleteEntry} />} />
-        <Route path='/file-upload' element={<FileUpload addEntry={addEntry} />} />
-
-      </Routes>
-      <Entries entries={entries} editEntry={editEntry} deleteEntry={deleteEntry} />
-
     </Router >
 
 

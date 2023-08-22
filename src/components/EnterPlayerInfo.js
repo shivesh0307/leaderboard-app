@@ -30,24 +30,26 @@ const EnterPlayerInfo = ({ addEntry }) => {
             <h2>Enter Player Information</h2>
             {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
             <form onSubmit={handleSubmit}>
-                <label>
+                <div className="form-group">
+
                     Player ID:
-                    <input type="text" value={playerId} onChange={(e) => setPlayerId(e.target.value)} />
-                </label>
-                <br />
-                <label>
+                    <input className="form-control" type="text" value={playerId} onChange={(e) => setPlayerId(e.target.value)} />
+
+                </div>
+
+                <div className="form-group">
                     Name:
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                </label>
-                <br />
-                <label>
+                    <input className="form-control" type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                </div>
+
+                <div className="form-group">
                     Points:
-                    <input type="number" value={points} onChange={(e) => setPoints(e.target.value)} />
-                </label>
+                    <input className="form-control" type="number" value={points} onChange={(e) => setPoints(e.target.value)} />
+                </div>
                 <br />
-                <button type="submit">Add Player</button>
+                <button type="submit" className="btn btn-primary">Add Player</button>
             </form>
-        </div>
+        </div >
     );
 };
 
