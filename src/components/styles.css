@@ -80,3 +80,38 @@
 .text-dark{
     color: var(--color-dark);
 }
+
+
+/*new */
+/* Add these styles to your existing CSS */
+.App {
+    padding-left: 250px; /* Adjust this value to match the width of your sidebar */
+  }
+  
+  .Sidebar {
+    position: fixed;
+    width: 250px; /* Adjust this value according to your sidebar width */
+    height: 100%;
+    overflow-y: auto;
+  }
+  
+  #main {
+    padding: 20px; /* Add padding to the content to separate it from the sidebar */
+    margin-left: 250px; /* Adjust this value to match the width of your sidebar */
+  }
+  
+  /* Make sure to adjust your media queries if you have responsive design */
+  @media (max-width: 768px) {
+    .Sidebar {
+      display: none;
+    }
+  
+    .App {
+      padding-left: 0;
+    }
+  
+    #main {
+      margin-left: 0;
+    }
+  }
+   

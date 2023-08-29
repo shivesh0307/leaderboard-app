@@ -50,6 +50,16 @@ const App = () => {
     localStorage.setItem('entries', JSON.stringify([...entries, entry]));
     setEntries([...entries, entry]);
   };
+
+  const addEntries = (newEntries) => {
+    const new_entries_with_id = newEntries.map((entry) => ({
+      ...entry, id: nanoid()
+    }))
+    const updatedEntries = [...entries, ...new_entries_with_id]
+    localStorage.setItem('entries', JSON.stringify(updatedEntries))
+    setEntries(updatedEntries)
+  }
+
   const deleteEntry = (entryToDelete) => {
     const updatedEntries = entries.filter((entry) => entry.id !== entryToDelete.id);
     localStorage.setItem('entries', JSON.stringify(updatedEntries));
@@ -66,34 +76,36 @@ const App = () => {
 
   return (
     <Router>
-      <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
-        <CDBSidebar textColor="#fff" backgroundColor="#333">
-          <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
-            <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
-              Sidebar
-            </a>
-          </CDBSidebarHeader>
+      <div style={{ display: 'flex', height: '100vh' }}>
+        <div className="Sidebar" >
+          <CDBSidebar textColor="#fff" backgroundColor="#333" style={{ height: '100%' }}>
+            <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
+              <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
+                Sidebar
+              </a>
+            </CDBSidebarHeader>
 
-          <CDBSidebarContent className="sidebar-content">
-            <CDBSidebarMenu>
-              <NavLink exact to="/" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="columns">Enter Player Points</CDBSidebarMenuItem>
-              </NavLink>
-              <NavLink exact to="/leaderboard" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="table">Leaderboard</CDBSidebarMenuItem>
-              </NavLink>
-              <NavLink exact to="/entries" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="user">All Entries</CDBSidebarMenuItem>
-              </NavLink>
-              <NavLink exact to="/file-upload" activeClassName="activeClicked">
-                <CDBSidebarMenuItem icon="upload">File Upload</CDBSidebarMenuItem>
-              </NavLink>
+            <CDBSidebarContent className="sidebar-content">
+              <CDBSidebarMenu>
+                <NavLink exact to="/" activeClassName="activeClicked">
+                  <CDBSidebarMenuItem icon="columns">Enter Player Points</CDBSidebarMenuItem>
+                </NavLink>
+                <NavLink exact to="/leaderboard" activeClassName="activeClicked">
+                  <CDBSidebarMenuItem icon="table">Leaderboard</CDBSidebarMenuItem>
+                </NavLink>
+                <NavLink exact to="/entries" activeClassName="activeClicked">
+                  <CDBSidebarMenuItem icon="user">All Entries</CDBSidebarMenuItem>
+                </NavLink>
+                <NavLink exact to="/file-upload" activeClassName="activeClicked">
+                  <CDBSidebarMenuItem icon="upload">File Upload</CDBSidebarMenuItem>
+                </NavLink>
 
-            </CDBSidebarMenu>
+              </CDBSidebarMenu>
 
-          </CDBSidebarContent>
+            </CDBSidebarContent>
 
-        </CDBSidebar>
+          </CDBSidebar>
+        </div>
 
         {/*<div>
         <nav>
@@ -119,7 +131,7 @@ const App = () => {
             <Route path='/leaderboard' element={<Leaderboard players={players} />} />
             <Route path='/' element={<EnterPlayerInfo addEntry={addEntry} />} />
             <Route path='/entries' element={<Entries entries={entries} editEntry={editEntry} deleteEntry={deleteEntry} />} />
-            <Route path='/file-upload' element={<FileUpload addEntry={addEntry} />} />
+            <Route path='/file-upload' element={<FileUpload addEntries={addEntries} />} />
 
           </Routes>
           {/*<div>
