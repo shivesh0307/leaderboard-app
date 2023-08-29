@@ -76,8 +76,8 @@ const App = () => {
 
   return (
     <Router>
-      <div style={{ /*display: 'flex',*/ height: '100vh' }}>
-        <div className="Sidebar" style={{ display: 'flex', height: '100vh' }}>
+      <div style={{ display: 'flex', height: '100vh' }}>
+        <div className="Sidebar" style={{ height: '100vh' }}>
           <CDBSidebar textColor="#fff" backgroundColor="#333" style={{ height: '100%' }}>
             <CDBSidebarHeader prefix={<i className="fa fa-bars fa-large"></i>}>
               <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>

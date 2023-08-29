@@ -11,9 +11,9 @@
 }
 
 #main{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        /*display: flex;*/
+        /*justify-content: center;
+        align-items: center;*/
         height: 100vh;
 }
 
@@ -69,7 +69,13 @@
 }
 
 #profile .flex img{
-    width: 20%;
+    /*width: 20%;*/
+    
+        width: 100px; /* Set a fixed width for the images */
+        height: 100px; /* Set a fixed height for the images */
+        object-fit: cover; /* Maintain aspect ratio and cover the container */
+        border-radius: 50%;
+      
     border-radius: 50%;
 }
 
@@ -115,3 +121,20 @@
     }
   }
    
+
+  /* new styles*/
+#name{
+    font-size: 30px; 
+}
+#playerId{
+  font-size: 20px; /* Adjust as needed */
+}
+.item{
+    font-size: 30px; /* Adjust as needed */   
+}
+
+
+#profile .flex #points{
+    align-items: center;
+    margin-left: 300px; /* Adjust the gap between points and image */
+  }
